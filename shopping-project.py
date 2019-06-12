@@ -27,6 +27,13 @@ products = [
 
 # pprint(products)
 
+#INFO CAPTURE / INPUT
+selected_id = input("Please input a product identifier:") #> "g" (string)
+print(selected_id)
+print(type(selected_id))
+
+#INFO DISPLAY/ OUTPUT
+
 # TODO: write some Python code here to produce the desired output
-x = int(input("give me item id"))
-print(products[x-1]['name'])
+# x = int(input("give me item id"))
+# print(products[x-1]['name'])
