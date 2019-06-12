@@ -25,7 +25,8 @@ products = [
     {"id":20, "name": "Pomegranate Cranberry & Aloe Vera Enrich Drink", "department": "beverages", "aisle": "juice nectars", "price": 4.25}
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
-print(products)
 # pprint(products)
 
 # TODO: write some Python code here to produce the desired output
+x = int(input("give me item id"))
+print(products[x-1]['name'])
