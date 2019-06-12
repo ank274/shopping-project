@@ -30,23 +30,28 @@ products = [
 #INFO CAPTURE / INPUT
 
 total_price = 0 
+selected_ids = [] 
 
 while True: 
         selected_id = input("Please input a product identifier:") #> "9" (string)
         if selected_id == "DONE":
             break
         else: 
-            matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
-            matching_product = matching_products[0]
-            total_price = total_price + matching_product["price"]
-            print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
-
+            
+            selected_ids.append(selected_id)
 
 
 
 #INFO DISPLAY/ OUTPUT
 
+# print(selected_ids)
 print("TOTAL PRICE: " + str(total_price))
+for selected_id in selected_ids:
+        matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+        matching_product = matching_products[0]
+        total_price = total_price + matching_product["price"]
+        print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
+
 
 
 # TODO: write some Python code here to produce the desired output
