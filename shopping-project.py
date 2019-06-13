@@ -3,8 +3,11 @@
 #from pprint import pprint
 
 import datetime
-today = datetime.datetime.now()
+from os import path
 
+today = datetime.datetime.now()
+total_price = 0 
+selected_ids = [] 
 
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -33,9 +36,6 @@ products = [
 
 #INFO CAPTURE / INPUT
 
-total_price = 0 
-selected_ids = [] 
-
 while True: 
         selected_id = input("Please input a product identifier:") #> "9" (string)
         if(selected_id.isdigit()):
@@ -52,34 +52,63 @@ while True:
                 print("not a valid input please type done to end")
             
 
-            
 
+# INFO DISPLAY/ OUTPUT
+response = input("would you like a receipt")
+response = response.lower()
+if(response != "yes"):
+    print("-------------------------------------------------------")
+    print("Welcome to Whole Foods")
+    print("www.wholefoods.com")
+    print("-------------------------------------------------------")
+    print("Date: " + str(today.strftime("%x")))
+    print("Time: " + str(today.strftime("%I:%M %p")))
+    print("-------------------------------------------------------")
 
+    # print(selected_ids)
+    print('{:<65} {:<2}'.format("Item(s)", "Price"))
+    for selected_id in selected_ids:
+            matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+            matching_product = matching_products[0]
+            total_price = total_price + matching_product["price"]
+            print('{:<65} ${:<0}'.format(matching_product["name"],str(matching_product["price"])))
 
-#INFO DISPLAY/ OUTPUT
+    print('{:>65} ${:<0}'.format("Total",str(round(total_price))))
+    tax = total_price * .08875
+    print('{:>65} ${:<0}'.format("Tax",str(round(tax,2))))
+    total_price = total_price + tax
+    print('{:>65} ${:<0}'.format("Total",str(round(total_price,2))))
+    print("-------------------------------------------------------")
+    print("Thank you for shopping at Whole Foods")
+    print("SEE YOU AGAIN SOON!")
+else:
+    day = today.strftime("%x").replace("/","-")
+    time = today.strftime("%X").replace(":","-")
+    file_name = path.relpath("receipts/" + day + "-" + time + ".txt")
+    file = open(file_name,"w")
+    file.write("------------------------------------------------------- \n")
+    file.write("Welcome to Whole Foods \n")
+    file.write("www.wholefoods.com \n")
+    file.write("------------------------------------------------------- \n")
+    file.write("Date: " + str(today.strftime("%x")) + "\n")
+    file.write("Time: " + str(today.strftime("%I:%M %p")) + "\n")
+    file.write("------------------------------------------------------- \n")
 
-print("-------------------------------------------------------")
-print("Welcome to Whole Foods")
-print("www.wholefoods.com")
-print("-------------------------------------------------------")
-print("Date: " + str(today.strftime("%x")))
-print("Time: " + str(today.strftime("%I:%M %p")))
-print("-------------------------------------------------------")
+    # print(selected_ids)
+    file.write('{:<65} {:<2} \n'.format("Item(s)", "Price"))
+    for selected_id in selected_ids:
+            matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
+            matching_product = matching_products[0]
+            total_price = total_price + matching_product["price"]
+            file.write('{:<65} ${:<0} \n'.format(matching_product["name"],str(matching_product["price"])))
 
-# print(selected_ids)
-print('{:<65} {:<2}'.format("Item(s)", "Price"))
-for selected_id in selected_ids:
-        matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
-        matching_product = matching_products[0]
-        total_price = total_price + matching_product["price"]
-        print('{:<65} ${:<0}'.format(matching_product["name"],str(matching_product["price"])))
+    file.write('{:>65} ${:<0} \n'.format("Total",str(round(total_price))))
+    tax = total_price * .08875
+    file.write('{:>65} ${:<0} \n'.format("Tax",str(round(tax,2))))
+    total_price = total_price + tax
+    file.write('{:>65} ${:<0} \n'.format("Total",str(round(total_price,2))))
+    file.write("------------------------------------------------------- \n")
+    file.write("Thank you for shopping at Whole Foods \n")
+    file.write("SEE YOU AGAIN SOON")
 
-print('{:>65} ${:<0}'.format("Total",str(round(total_price))))
-tax = total_price * .08875
-print('{:>65} ${:<0}'.format("Tax",str(round(tax,2))))
-total_price = total_price + tax
-print('{:>65} ${:<0}'.format("Total",str(round(total_price,2))))
-print("-------------------------------------------------------")
-print("Thank you for shopping at Whole Foods")
-print("SEE YOU AGAIN SOON!")
-
+    file.close ()
